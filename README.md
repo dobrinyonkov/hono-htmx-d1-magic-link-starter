@@ -52,6 +52,18 @@ npm run db:migrate:local   # apply migrations to local D1
 npm run db:migrate:remote  # apply migrations to remote D1
 ```
 
+## Tests and CI
+
+The test suite runs inside Cloudflare's Workers Vitest integration and applies the D1 migrations before each test.
+
+```bash
+npm test
+npm run check
+npm run ci
+```
+
+GitHub Actions runs `npm run ci` on pushes to `main` and on pull requests.
+
 ## Environment Values
 
 `wrangler.jsonc` contains non-secret defaults:
