@@ -1,0 +1,29 @@
+{
+  "name": "hono-htmx-d1-magic-link-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --persist-to .wrangler/state --local --live-reload",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply hono_htmx_starter --local",
+    "db:migrate:remote": "wrangler d1 migrations apply hono_htmx_starter --remote",
+    "check": "tsc --noEmit && wrangler deploy --dry-run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.15",
+    "mimetext": "^3.0.28"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.85.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.0"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hono-htmx-d1-magic-link",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "APP_NAME": "Hono D1 Starter",
+    "FROM_EMAIL": "login@example.com",
+    "MAGIC_LINK_TTL_MINUTES": "10",
+    "SESSION_TTL_DAYS": "30",
+    "DEV_LOGIN_LINKS": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hono_htmx_starter",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ]
+}

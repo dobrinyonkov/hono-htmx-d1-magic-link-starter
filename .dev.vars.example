@@ -1,0 +1,5 @@
+APP_NAME="Hono D1 Starter"
+FROM_EMAIL="login@example.com"
+MAGIC_LINK_TTL_MINUTES="10"
+SESSION_TTL_DAYS="30"
+DEV_LOGIN_LINKS="true"
