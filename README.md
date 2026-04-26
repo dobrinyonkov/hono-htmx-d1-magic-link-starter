@@ -1,5 +1,7 @@
 # Hono + htmx + Alpine + Drizzle + D1 Starter
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/dobrinyonkov/hono-htmx-d1-magic-link-starter)
+
 A small Cloudflare Worker starter with Hono routes, server-rendered HTML, htmx form swaps, Alpine.js UI state, Drizzle schema, D1 persistence, and Cloudflare Email magic links.
 
 ## Quick Start
@@ -23,6 +25,8 @@ Open the local Wrangler URL. In development, submitting the login form renders a
 - `/logout` deletes the session and clears the cookie.
 
 ## Cloudflare Setup
+
+Use the deploy button above to clone and deploy this Worker to your Cloudflare account. Cloudflare can provision the D1 database from `wrangler.jsonc`, bind it to `DB`, and run the deploy script.
 
 For production email, enable Cloudflare Email Routing for your domain, then set `FROM_EMAIL` in `wrangler.jsonc` to an address on that domain. The starter uses this binding:
 
