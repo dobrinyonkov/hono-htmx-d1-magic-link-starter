@@ -2,7 +2,7 @@
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/dobrinyonkov/hono-htmx-d1-magic-link-starter)
 
-A small Cloudflare Worker starter with Hono routes, server-rendered HTML, htmx form swaps, Alpine.js UI state, Drizzle schema, D1 persistence, and Cloudflare Email magic links.
+A small Cloudflare Worker starter with Hono routes, TSX-rendered HTML, htmx form swaps, Alpine.js UI state, Drizzle schema, D1 persistence, and Cloudflare Email magic links.
 
 ## Quick Start
 
