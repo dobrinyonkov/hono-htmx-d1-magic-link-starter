@@ -13,7 +13,7 @@
     "FROM_EMAIL": "login@example.com",
     "MAGIC_LINK_TTL_MINUTES": "10",
     "SESSION_TTL_DAYS": "30",
-    "DEV_LOGIN_LINKS": "false"
+    "DEV_LOGIN_LINKS": "true"
   },
   "d1_databases": [
     {
