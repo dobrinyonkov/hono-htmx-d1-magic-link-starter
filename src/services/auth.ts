@@ -1,10 +1,10 @@
 import { and, eq, gt, isNull } from "drizzle-orm";
 import type { Context } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { getDb } from "./db/client";
-import { magicLinks, sessions, users, type User } from "./db/schema";
+import { getDb } from "../db/client";
+import { magicLinks, sessions, users, type User } from "../db/schema";
 import { createId, createToken, daysFromNow, hashToken, minutesFromNow, nowIso } from "./security";
-import type { AppEnv } from "./types";
+import type { AppEnv } from "../types";
 
 const SESSION_COOKIE = "starter_session";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

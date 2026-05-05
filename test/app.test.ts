@@ -4,7 +4,7 @@ import { env } from "cloudflare:workers";
 import { createExecutionContext } from "cloudflare:test";
 import { describe, expect, it } from "vitest";
 import app from "../src/index";
-import { hashToken } from "../src/security";
+import { hashToken } from "../src/services/security";
 
 function fetchApp(path: string, init?: RequestInit) {
   const request = new Request(new URL(path, "http://localhost").toString(), init);
@@ -119,5 +119,67 @@ describe("security helpers", () => {
     expect(first).toBe(second);
     expect(first).not.toBe("sample-token");
     expect(first).toMatch(/^[a-f0-9]{64}$/);
+  });
+});
+
+describe("csrf protection", () => {
+  it("rejects POST requests with mismatched Origin header", async () => {
+    const body = new URLSearchParams({ email: "test@example.com" });
+    const response = await fetchApp("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Origin": "https://evil.com"
+      },
+      body
+    });
+
+    expect(response.status).toBe(403);
+  });
+
+  it("allows POST requests with matching Origin header", async () => {
+    const body = new URLSearchParams({ email: "test@example.com" });
+    const response = await fetchApp("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Origin": "http://localhost"
+      },
+      body
+    });
+
+    expect(response.status).toBe(200);
+  });
+
+  it("allows POST requests without Origin header (non-browser clients)", async () => {
+    const body = new URLSearchParams({ email: "test@example.com" });
+    const response = await fetchApp("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body
+    });
+
+    expect(response.status).toBe(200);
+  });
+});
+
+describe("rate limiting", () => {
+  it("rejects requests after exceeding the limit", async () => {
+    const body = new URLSearchParams({ email: "ratelimit@example.com" });
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "HX-Request": "true"
+    };
+
+    const responses = [];
+    for (let i = 0; i < 12; i++) {
+      responses.push(await fetchApp("/login", { method: "POST", headers, body }));
+    }
+
+    const lastResponse = responses[responses.length - 1];
+    expect(lastResponse.status).toBe(429);
+    expect(lastResponse.headers.get("Retry-After")).toBeTruthy();
   });
 });
