@@ -2,44 +2,68 @@ import type { HtmlEscapedString } from "hono/utils/html";
 
 export function loginPage(result?: HtmlEscapedString | string): HtmlEscapedString {
   return (
-    <section class="stack" x-data="{ email: '' }">
-      <header>
-        <h1>Sign in</h1>
-        <p>Enter your email and use the magic link to continue.</p>
-      </header>
-
-      <form
-        class="login-form"
-        method="post"
-        action="/login"
-        hx-post="/login"
-        hx-target="#login-response"
-        hx-swap="innerHTML"
-        hx-indicator="#login-spinner"
-      >
-        <label class="field">
-          <span>Email</span>
-          <input
-            name="email"
-            type="email"
-            autocomplete="email"
-            inputmode="email"
-            required
-            x-model="email"
-            placeholder="you@example.com"
-          />
-        </label>
-        <p class="hint" x-show="email.includes('@')" x-cloak>
-          Link for <strong x-text="email.trim().toLowerCase()"></strong>
-        </p>
-        <button type="submit">
-          Send magic link
-          <span id="login-spinner" class="htmx-indicator"> …</span>
+    <div x-data="{ activeTab: 'signin' }" style="display: contents;">
+      <nav class="sidebar">
+        <button
+          class="sidebar-item"
+          x-bind:class="activeTab === 'signin' ? 'active' : ''"
+          x-on:click="activeTab = 'signin'"
+        >
+          Sign in
         </button>
-      </form>
+        <button
+          class="sidebar-item"
+          x-bind:class="activeTab === 'about' ? 'active' : ''"
+          x-on:click="activeTab = 'about'"
+        >
+          About
+        </button>
+      </nav>
 
-      <div id="login-response">{result ?? null}</div>
-    </section>
+      <div class="main">
+        <section class="tab-content" x-show="activeTab === 'signin'" x-cloak>
+          <h2>Sign in</h2>
+          <p>Enter your email and use the magic link to continue.</p>
+
+          <form
+            method="post"
+            action="/login"
+            hx-post="/login"
+            hx-target="#login-response"
+            hx-swap="innerHTML"
+            hx-indicator="#login-spinner"
+          >
+            <div class="field">
+              <label>Email</label>
+              <input
+                name="email"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                required
+                placeholder="you@example.com"
+              />
+            </div>
+            <button type="submit">
+              Send magic link
+              <span id="login-spinner" class="htmx-indicator"> …</span>
+            </button>
+          </form>
+
+          <div id="login-response">{result ?? null}</div>
+        </section>
+
+        <section class="tab-content" x-show="activeTab === 'about'" x-cloak>
+          <h2>About</h2>
+          <p>A small Cloudflare Worker starter with Hono routes, htmx, Alpine, Drizzle, D1, and magic link auth.</p>
+          <ul>
+            <li>HTTP-only D1-backed sessions</li>
+            <li>Hashed single-use magic link tokens</li>
+            <li>Cloudflare Email binding support</li>
+          </ul>
+        </section>
+      </div>
+    </div>
   ) as HtmlEscapedString;
 }
 

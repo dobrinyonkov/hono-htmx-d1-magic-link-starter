@@ -45,7 +45,7 @@ describe("worker routes", () => {
     const page = await response.text();
 
     expect(response.status).toBe(200);
-    expect(page).toContain("<h1>Sign in</h1>");
+    expect(page).toContain("<h2>Sign in</h2>");
     expect(page).toContain("htmx.org@2.0.10");
     expect(page).toContain("alpinejs@3.15.11");
   });
@@ -81,7 +81,7 @@ describe("worker routes", () => {
     const dashboardPage = await dashboard.text();
 
     expect(dashboard.status).toBe(200);
-    expect(dashboardPage).toContain("<h1>Dashboard</h1>");
+    expect(dashboardPage).toContain("<h2>Account</h2>");
     expect(dashboardPage).toContain("person@example.com");
 
     const logout = await fetchApp("/logout", {
